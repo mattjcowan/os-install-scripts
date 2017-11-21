@@ -2,6 +2,9 @@
 
 # This script works with the 'install-aspnet-core-webapp.sh' script
 
+# Get public IP for this server
+publicip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+
 # Install nginx: https://docs.microsoft.com/en-us/aspnet/core/publishing/linuxproduction?tabs=aspnetcore2x
 sudo apt-get install nginx -y
 sudo service nginx start
