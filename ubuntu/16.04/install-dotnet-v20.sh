@@ -1,17 +1,5 @@
 #!/bin/sh
 
-# SAMPLE USAGE(S)
-# ------------------------------
-# curl GIST_URL | bash
-# OR
-# curl -o /tmp/ubuntu1604-install-dotnet-v20.sh GIST_URL
-# chmod +x /tmp/ubuntu1604-install-dotnet-v20.sh
-# /tmp/ubuntu1604-install-dotnet-v20.sh
-# OR
-# curl -o /tmp/ubuntu1604-install-dotnet-v20.sh GIST_URL
-# chmod +x /tmp/ubuntu1604-install-dotnet-v20.sh
-# echo /tmp/ubuntu1604-install-dotnet-v20.sh | at now + 1 minute
-
 # Install dotnet core pre-requisites
 # see: https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x
 
