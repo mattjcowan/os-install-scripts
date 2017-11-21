@@ -39,4 +39,7 @@ systemctl enable kestrel-webapp.service
 
 # start the service and check status
 systemctl start kestrel-webapp.service
-systemctl status kestrel-webapp.service
+
+# Monitor the status of the service using (beware, this keeps the terminal open)
+# systemctl status kestrel-webapp.service
+
