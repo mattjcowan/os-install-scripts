@@ -99,4 +99,4 @@ sudo ufw default allow outgoing
 sudo ufw allow ssh
 sudo ufw allow 80
 sudo ufw allow 443
-sudo ufw enable -y
+sudo ufw --force enable
