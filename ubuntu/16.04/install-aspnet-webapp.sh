@@ -25,7 +25,7 @@ Description=WebApp Kestrel Service
 WorkingDirectory=/var/www/webapp
 ExecStart=/usr/bin/dotnet /var/www/webapp/WebApp.dll
 Restart=always
-RestartSec=5 # Restart service after 5 seconds if it crashes
+RestartSec=10
 SyslogIdentifier=dotnet-webapp
 User=www-data
 Environment=ASPNETCORE_ENVIRONMENT=Production
