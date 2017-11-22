@@ -1,6 +1,7 @@
 #!/bin/sh
 
 # Create sample app if it does not exist
+# You could also pull down a git repository if you want
 if [ ! -d /var/www/webapp ]; then
     cd /home/
     mkdir apps
@@ -43,3 +44,5 @@ systemctl start kestrel-webapp.service
 # Monitor the status of the service using (beware, this keeps the terminal open)
 # systemctl status kestrel-webapp.service
 
+# Restart the app using
+# systemctl try-restart kestrel-webapp.service
