@@ -13,6 +13,7 @@ sudo service nginx start
 
 # Install php and relevant extensions
 sudo apt-get -y install php-fpm php-cli php-json php-zip php-curl php-gd php-common php-sqlite3 php-mysql
+sudo apt-get -y install php-finfo
 
 # Set the PHP memory limit to 128MB
 sudo sed -i "s/memory_limit = .*/memory_limit = 128MB/" /etc/php/7.0/fpm/php.ini
