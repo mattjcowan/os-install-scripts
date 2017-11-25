@@ -4,8 +4,8 @@
 publicip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 
 sudo apt-get update && sudo apt-get -y upgrade
-sudo apt-get install nano git
-sudo apt-get install sqlite3 libsqlite3-dev
+sudo apt-get install nano git -y
+sudo apt-get install sqlite3 libsqlite3-dev -y
 
 # Install nginx: https://docs.microsoft.com/en-us/aspnet/core/publishing/linuxproduction?tabs=aspnetcore2x
 sudo apt-get install nginx -y
