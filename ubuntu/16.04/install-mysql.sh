@@ -59,7 +59,16 @@ echo "$SECURE_MYSQL"
 sudo aptitude -y purge expect
 
 sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/my.cnf
-# TODO
-# mysql -uroot -p -e 'USE mysql; UPDATE `user` SET `Host`="%" WHERE `User`="root" AND `Host`="localhost"; DELETE FROM `user` WHERE `Host` != "%" AND `User`="root"; FLUSH PRIVILEGES;'
+cat >~/.my.cnf <<EOL
+[client]
+user=root
+password=$MYSQL_PASSWORD
+EOL
+
+chmod 600 ~/.my.cnf
+
+mysql -u root -e 'USE mysql; UPDATE `user` SET `Host`="%" WHERE `User`="root" AND `Host`="localhost"; DELETE FROM `user` WHERE `Host` != "%" AND `User`="root"; FLUSH PRIVILEGES;'
 
 sudo service mysql restart
+
+
