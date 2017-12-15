@@ -21,4 +21,7 @@ sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/microsof
 sudo apt-get update
 
 # Install .NET core (for some reasons there are issues here with timing, and even a sleep after this doesn't quite work)
-sudo apt-get install dotnet-sdk-2.0.0 -y
+# Hosting only (no build tools) 
+# sudo apt-get install dotnet-hosting-2.0.4 -y
+# SDK (includes build tools)
+sudo apt-get install dotnet-sdk-2.0.4 -y
