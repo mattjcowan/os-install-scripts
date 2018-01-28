@@ -33,3 +33,11 @@ sudo ufw reload
 
 # --> prevent Nginx from starting at server boot
 # sudo systemctl disable nginx
+
+# Install ngxtop
+# - https://github.com/lebhinh/ngxtop
+# -----------------------------
+pip install ngxtop 
+# --> Console based-view of real-time usage of nginx
+# ngxtop -l /var/log/nginx/access.log
+# ngxtop -l /var/log/nginx/access.log --filter 'status == 404'
