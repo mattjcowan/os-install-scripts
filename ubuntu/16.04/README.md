@@ -1,7 +1,7 @@
 # Install a variety of applications and utilities from the command line
 
-- (Common libraries & utilities)[#common-libraries--utilities]
-- (NGINX)[#nginx]
+- [Common libraries & utilities](#common-libraries--utilities)
+- [nginx](#nginx)
 
 ## Scripts
 
