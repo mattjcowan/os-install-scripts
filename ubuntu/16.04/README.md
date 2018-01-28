@@ -1,7 +1,7 @@
 # Install a variety of applications and utilities from the command line
 
 - [Common libraries & utilities](#common-libraries--utilities)
-- [nginx](#nginx)
+- [Nginx](#nginx)
 
 ## Scripts
 
@@ -19,6 +19,12 @@ curl $DOWNLOAD_URL_BASE/install-common-libraries.sh | bash
 ```
 
 ### NGINX
+
+#### Prerequisites:
+
+- [Common libraries & utilities](#common-libraries--utilities)
+
+#### Script:
 
 ```shell
 curl $DOWNLOAD_URL_BASE/install-nginx.sh | bash
