@@ -12,3 +12,15 @@ sudo apt-get install nano -y
 sudo apt-get install git -y
 sudo apt-get install sqlite3 -y
 sudo apt-get install libsqlite3-dev -y
+sudo apt-get install ufw -y
+
+# Configure Firewall
+# See also:
+# - https://www.vultr.com/docs/how-to-configure-ufw-firewall-on-ubuntu-14-04
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+# OR allow only specific IPs
+# sudo ufw deny ssh
+# sudo ufw allow from 192.168.0.1 to any port 22
+sudo ufw --force enable
