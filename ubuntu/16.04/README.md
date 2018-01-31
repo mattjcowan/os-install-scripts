@@ -1,7 +1,7 @@
 # Install a variety of applications and utilities from the command line
 
 - [Common libraries & utilities](#common-libraries--utilities)
-- [Install remote user](#install-remote-user)
+- [Secure server](#secure-server)
 - [Nginx](#nginx)
 - [.NET Core (v203)](#net-core-v203)
 - [Node v8.9.4](#node-v894)
@@ -21,11 +21,11 @@ Run this before any of the other scripts to ensure the most common utilities exi
 curl $DOWNLOAD_URL_BASE/install-common-libraries.sh | bash
 ```
 
-### [Install remote user](https://github.com/mattjcowan/os-install-scripts/blob/master/ubuntu/16.04/install-remoteuser.sh)
+### [Secure server](https://github.com/mattjcowan/os-install-scripts/blob/master/ubuntu/16.04/secure-server.sh)
 
 - Creates a NON 'root' user 
 - Gives the user ssh permissions
-- Disables password authentication and root ssh login
+- Disables password authentication and root ssh login (if PERMIT_ROOT_LOGIN var is 'no')
 - Copies the .ssh/authorized_keys to the new user for immediate ssh access
 
 #### Script:
@@ -33,8 +33,9 @@ curl $DOWNLOAD_URL_BASE/install-common-libraries.sh | bash
 ```shell
 export NEW_USER=remoteuser
 export NEW_PASSWORD=a_super_secret_password
+export PERMIT_ROOT_LOGIN=no  # options: no, prohibit-password (default)
 DOWNLOAD_URL_BASE=https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/16.04
-curl $DOWNLOAD_URL_BASE/install-remoteuser.sh | bash
+curl $DOWNLOAD_URL_BASE/secure-server.sh | bash
 ```
 
 You can now ssh as this user ... ssh remoteuser@{server_ip}
