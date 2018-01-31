@@ -1,6 +1,7 @@
 # Install a variety of applications and utilities from the command line
 
 - [Common libraries & utilities](#common-libraries--utilities)
+- [Install remote user](#install-remote-user)
 - [Nginx](#nginx)
 - [.NET Core (v203)](#net-core-v203)
 - [Node v8.9.4](#node-v894)
@@ -19,6 +20,24 @@ Run this before any of the other scripts to ensure the most common utilities exi
 ```shell
 curl $DOWNLOAD_URL_BASE/install-common-libraries.sh | bash
 ```
+
+### [Install remote user](https://github.com/mattjcowan/os-install-scripts/blob/master/ubuntu/16.04/install-remoteuser.sh)
+
+- Creates a NON 'root' user 
+- Gives the user ssh permissions
+- Disables password authentication and root ssh login
+- Copies the .ssh/authorized_keys to the new user for immediate ssh access
+
+#### Script:
+
+```shell
+export NEW_USER=remoteuser
+export NEW_PASSWORD=a_super_secret_password
+DOWNLOAD_URL_BASE=https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/16.04
+curl $DOWNLOAD_URL_BASE/install-remoteuser.sh | bash
+```
+
+You can now ssh as this user ... ssh remoteuser@{server_ip}
 
 ### [Nginx](https://github.com/mattjcowan/os-install-scripts/blob/master/ubuntu/16.04/install-nginx.sh)
 
