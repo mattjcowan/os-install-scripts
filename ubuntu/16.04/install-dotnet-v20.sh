@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# -----------------------------
+# INSTRUCTIONS
+# -----------------------------
+# DOWNLOAD_URL_BASE=https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/16.04
+# curl $DOWNLOAD_URL_BASE/install-common-libraries.sh | bash
+# curl $DOWNLOAD_URL_BASE/install-dotnet-v20.sh | bash
+# -----------------------------
+
 # Install dotnet core pre-requisites
 # see: https://docs.microsoft.com/en-us/dotnet/core/linux-prerequisites?tabs=netcore2x
 
