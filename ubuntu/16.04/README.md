@@ -3,6 +3,7 @@
 - [Common libraries & utilities](#common-libraries--utilities)
 - [Nginx](#nginx)
 - [.NET Core (v203)](#net-core-v203)
+- [Node v8.9.4](#node-v894)
 
 ## Scripts
 
@@ -19,7 +20,7 @@ Run this before any of the other scripts to ensure the most common utilities exi
 curl $DOWNLOAD_URL_BASE/install-common-libraries.sh | bash
 ```
 
-### [NGINX](https://github.com/mattjcowan/os-install-scripts/blob/master/ubuntu/16.04/install-nginx.sh)
+### [Nginx](https://github.com/mattjcowan/os-install-scripts/blob/master/ubuntu/16.04/install-nginx.sh)
 
 #### Prerequisites:
 
