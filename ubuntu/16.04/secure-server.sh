@@ -6,7 +6,7 @@
 # export NEW_USER=remoteuser
 # export NEW_PASSWORD=3up3eR$raz7p0sswR4d
 # DOWNLOAD_URL_BASE=https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/16.04
-# curl $DOWNLOAD_URL_BASE/install-user.sh | bash
+# curl $DOWNLOAD_URL_BASE/secure-server.sh | bash
 # -----------------------------
 
 if [ ! -v NEW_USER ]; then
@@ -23,19 +23,23 @@ chmod 700 /home/${NEW_USER}/.ssh
 cat ~/.ssh/authorized_keys >> /home/${NEW_USER}/.ssh/authorized_keys
 chown ${NEW_USER}:${NEW_USER} /home/${NEW_USER} -R
 
+sed -i 's/#ChallengeResponseAuthentication/ChallengeResponseAuthentication/g' /etc/ssh/sshd_config
 sed -i 's/#PermitRootLogin/PermitRootLogin/g' /etc/ssh/sshd_config
+sed -i 's/#UsePAM/UsePAM/g' /etc/ssh/sshd_config
 sed -i 's/#PasswordAuthentication/PasswordAuthentication/g' /etc/ssh/sshd_config
 sed -i 's/#PubkeyAuthentication/PubkeyAuthentication/g' /etc/ssh/sshd_config
 
 # disable password authentication
-# disable root login
+# disable root login with password (still allow SSH key auth)
 sshd_config_file=/etc/ssh/sshd_config
 cp -p $sshd_config_file $sshd_config_file.old &&
 while read key other
 do
  case $key in
- PermitRootLogin) other=no;;
+ ChallengeResponseAuthentication) other=no;;
  PasswordAuthentication) other=no;;
+ UsePAM) other=no;;
+ PermitRootLogin) other=prohibit-password;;
  PubkeyAuthentication) other=yes;;
  esac
  echo "$key $other"
