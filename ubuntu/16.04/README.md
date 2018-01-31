@@ -2,6 +2,7 @@
 
 - [Common libraries & utilities](#common-libraries--utilities)
 - [Nginx](#nginx)
+- [.NET Core (v203)](#net-core-v203)
 
 ## Scripts
 
@@ -28,4 +29,16 @@ curl $DOWNLOAD_URL_BASE/install-common-libraries.sh | bash
 
 ```shell
 curl $DOWNLOAD_URL_BASE/install-nginx.sh | bash
+```
+
+### .NET Core v2.0.3
+
+#### Prerequisites:
+
+- [Common libraries & utilities](#common-libraries--utilities)
+
+#### Script:
+
+```shell
+curl $DOWNLOAD_URL_BASE/install-dotnet-v20.sh | bash
 ```
