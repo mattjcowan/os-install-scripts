@@ -5,6 +5,7 @@
 # -----------------------------
 # export NEW_USER=remoteuser
 # export NEW_PASSWORD=3up3eR$raz7p0sswR4d
+# export PERMIT_ROOT_LOGIN=no  # options: no, prohibit-password (default)
 # DOWNLOAD_URL_BASE=https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/16.04
 # curl $DOWNLOAD_URL_BASE/secure-server.sh | bash
 # -----------------------------
@@ -15,6 +16,10 @@ fi
 
 if [ ! -v NEW_PASSWORD ]; then
   NEW_PASSWORD=3up3eR$raz7p0sswR4d
+fi
+
+if [ ! -v PERMIT_ROOT_LOGIN ]; then
+  PERMIT_ROOT_LOGIN=prohibit-password
 fi
 
 if [ ! -d /home/${NEW_USER}/.ssh ]; then
@@ -42,7 +47,7 @@ do
  ChallengeResponseAuthentication) other=no;;
  PasswordAuthentication) other=no;;
  UsePAM) other=no;;
- PermitRootLogin) other=prohibit-password;;
+ PermitRootLogin) other=$PERMIT_ROOT_LOGIN;;
  PubkeyAuthentication) other=yes;;
  esac
  echo "$key $other"
