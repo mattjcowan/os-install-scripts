@@ -17,11 +17,14 @@ if [ ! -v NEW_PASSWORD ]; then
   NEW_PASSWORD=3up3eR$raz7p0sswR4d
 fi
 
-useradd -m -p $(openssl passwd -1 ${NEW_PASSWORD}) -s /bin/bash -G sudo ${NEW_USER}
-mkdir /home/${NEW_USER}/.ssh
-chmod 700 /home/${NEW_USER}/.ssh
-cat ~/.ssh/authorized_keys >> /home/${NEW_USER}/.ssh/authorized_keys
-chown ${NEW_USER}:${NEW_USER} /home/${NEW_USER} -R
+if [ ! -d /home/${NEW_USER}/.ssh ]; then
+  useradd -m -p $(openssl passwd -1 ${NEW_PASSWORD}) -s /bin/bash -G sudo ${NEW_USER}
+  gpasswd -a ${NEW_USER} sudo
+  mkdir /home/${NEW_USER}/.ssh
+  chmod 700 /home/${NEW_USER}/.ssh
+  cat ~/.ssh/authorized_keys >> /home/${NEW_USER}/.ssh/authorized_keys
+  chown ${NEW_USER}:${NEW_USER} /home/${NEW_USER} -R
+fi
 
 sed -i 's/#ChallengeResponseAuthentication/ChallengeResponseAuthentication/g' /etc/ssh/sshd_config
 sed -i 's/#PermitRootLogin/PermitRootLogin/g' /etc/ssh/sshd_config
