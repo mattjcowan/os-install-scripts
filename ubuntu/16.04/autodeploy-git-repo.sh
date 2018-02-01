@@ -5,6 +5,7 @@
 # -----------------------------
 # !! required
 # export REPO_URL=repo_url  # include username:password if it's a private repo (i.e.: https://username:Passw%40rd@github.com/org/repo.git)
+# export APP_PORT=5000 # defaults to 5000
 #
 # !! optional
 # export APP_NAME=name_of_app_or_csproj # name of app (will default to 'webapp') !! WARNING, in the case of a .net app, this should be the name of the assembly to run
@@ -24,6 +25,7 @@
 
 if [ ! -v APP_NAME ]; then APP_NAME=webapp; fi
 if [ ! -v REPO_BRANCH ]; then REPO_BRANCH=master; fi
+if [ ! -v APP_PORT ]; then APP_PORT=5000; fi
 
 SCRIPT_DIR=/home/apps
 LOCAL_DIR=$SCRIPT_DIR/$APP_NAME
@@ -128,8 +130,8 @@ if [ \$changed = 1 ]; then
     $BUILD_CMD
     systemctl stop kestrel-webapp.service
     rsync -r $PUBLISH_DIR/ $DEPLOY_DIR
-    systemctl try-restart kestrel-webapp.service
-    systemctl try-restart kestrel-webapp.service
+    systemctl start kestrel-webapp.service
+    #systemctl try-restart kestrel-webapp.service
     echo "Updated successfully";
 else
     echo "Up to date"
@@ -142,5 +144,91 @@ cat >/etc/cron.d/refresh_webapp_every_minute <<EOL
 * * * * * root /bin/sh $SCRIPT_DIR/webapp.refresh.sh > $SCRIPT_DIR/webapp.refresh.log 2>&1
 
 EOL
+
+# Get public IP for this server
+publicip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+
+# Overwrite nginx file
+cat >/etc/nginx/sites-available/default <<EOL
+server {
+    listen 80;
+    location / {
+        proxy_pass http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection keep-alive;
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+EOL
+
+# reload nginx 
+sudo nginx -s reload
+
+# GO FURTHER, add a self-signed cert with 443 and SSL (works with cloudflare)
+
+# create a self-signed certificate
+# see: https://www.digitalocean.com/community/tutorials/how-to-create-a-self-signed-ssl-certificate-for-nginx-in-ubuntu-16-04
+
+sudo openssl req -x509 -nodes -days 365 -newkey rsa:4096 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj /C=US/ST=Illinois/L=Chicago/O=Startup/CN=$publicip
+sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 4096 > /dev/null 2>&1
+
+cat >/etc/nginx/snippets/self-signed.conf <<EOL
+ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+EOL
+
+cat >/etc/nginx/snippets/ssl-params.conf <<EOL
+# from https://cipherli.st/
+# and https://raymii.org/s/tutorials/Strong_SSL_Security_On_nginx.html
+ssl_protocols TLSv1.2;
+ssl_prefer_server_ciphers on;
+ssl_ciphers "EECDH+CHACHA20:EECDH+CHACHA20-draft:EECDH+AES128:RSA+AES128:EECDH+AES256:RSA+AES256:EECDH+3DES:RSA+3DES:!MD5";
+ssl_ecdh_curve secp384r1;
+ssl_session_cache shared:SSL:10m;
+ssl_session_tickets off;
+ssl_stapling on;
+ssl_stapling_verify on;
+resolver 8.8.8.8 8.8.4.4 valid=300s;
+resolver_timeout 5s;
+# Disable preloading HSTS for now.  You can use the commented out header line that includes
+# the "preload" directive if you understand the implications.
+#add_header Strict-Transport-Security "max-age=63072000; includeSubdomains; preload";
+add_header Strict-Transport-Security "max-age=63072000; includeSubdomains";
+add_header X-Frame-Options DENY;
+add_header X-Content-Type-Options nosniff;
+ssl_dhparam /etc/ssl/certs/dhparam.pem;
+EOL
+
+# Before we go any further, let's back up our current server block file:
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+
+cat >/etc/nginx/sites-available/default <<EOL
+server {
+    # SSL configuration
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    listen 443 ssl http2 default_server;
+    listen [::]:443 ssl http2 default_server;
+    server_name $publicip;
+    include snippets/self-signed.conf;
+    include snippets/ssl-params.conf;
+    location / {
+        proxy_pass http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header Connection keep-alive;
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+    }
+}
+EOL
+
+# restart nginx
+sudo systemctl restart nginx
+
+# improve nginx further
+# see: https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-with-http-2-support-on-ubuntu-16-04
 
 
