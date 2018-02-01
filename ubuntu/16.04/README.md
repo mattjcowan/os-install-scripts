@@ -5,6 +5,7 @@
 - [Nginx](#nginx)
 - [.NET Core (v203)](#net-core-v203)
 - [Node v8.9.4](#node-v894)
+- [Continous deployment of git repo](#continous-deployment-of-git-repo)
 
 ## Scripts
 
@@ -74,4 +75,39 @@ curl $DOWNLOAD_URL_BASE/install-dotnet-v20.sh | bash
 
 ```shell
 curl $DOWNLOAD_URL_BASE/install-node-v8.sh | bash
+```
+
+### [Continous deployment of git repo](https://github.com/mattjcowan/os-install-scripts/blob/master/ubuntu/16.04/cd-git-repo.sh)
+
+#### Prerequisites:
+
+- [Common libraries & utilities](#common-libraries--utilities)
+- [Nginx](#nginx)
+- [.NET Core (v203)](#net-core-v203)
+- [Node v8.9.4](#node-v894)
+
+#### Script:
+
+```shell
+# !! required
+# --> include username:password if it's a private repo (i.e.: https://username:Passw%40rd@github.com/org/repo.git)
+export REPO_URL=repo_url  
+
+# !! optional
+# --> defaults to 5000
+# export APP_PORT=5000 
+# --> name of app (will default to 'webapp') !! WARNING, in the case of a .net app, this should be the name of the assembly to run
+# export APP_NAME=name_of_app_or_csproj 
+# --> the branch that should be deployed (defaults to 'master')
+# export REPO_BRANCH=master 
+# --> defaults to ./ (directory where the build command should be run from)
+# export BUILD_DIR=src 
+# --> defaults to ./build.sh or ./scripts/build.sh or npm run build (if there's a package.json file) or dotnet restore/build/publish if there's a csproj file (in that order)
+# export BUILD_CMD=cd src && npm run build 
+# --> defaults to 'dist/'
+# export PUBLISH_DIR=dist/ 
+# --> defaults to /var/www/$APP_NAME
+# export DEPLOY_DIR=/var/www/webapp 
+
+curl $DOWNLOAD_URL_BASE/cd-git-repo.sh | bash
 ```
