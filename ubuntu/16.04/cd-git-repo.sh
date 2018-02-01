@@ -20,7 +20,7 @@
 # curl $DOWNLOAD_URL_BASE/install-nginx.sh | bash
 # curl $DOWNLOAD_URL_BASE/install-node-v8.sh | bash
 # curl $DOWNLOAD_URL_BASE/install-dotnet-v20.sh | bash
-# curl $DOWNLOAD_URL_BASE/autodeploy-git-repo.sh | bash
+# curl $DOWNLOAD_URL_BASE/cd-git-repo.sh | bash
 # -----------------------------
 
 if [ ! -v APP_NAME ]; then APP_NAME=webapp; fi
