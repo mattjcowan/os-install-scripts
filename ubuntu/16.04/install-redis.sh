@@ -50,7 +50,7 @@ fi
 
 # make sure the systemd service definition exists
 if [ ! -f /etc/systemd/system/redis.service ]; then
-cat >/etc/systemd/system/redis.service <<EOL
+cat >/tmp/redis.service <<EOL
 [Unit]
 Description=Redis In-Memory Data Store
 After=network.target
@@ -65,6 +65,7 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 EOL
+sudo mv /tmp/redis.service /etc/systemd/system/redis.service
 fi
 
 # setup the redis user
