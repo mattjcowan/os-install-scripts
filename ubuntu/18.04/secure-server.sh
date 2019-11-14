@@ -8,6 +8,7 @@
 # export NEW_PASSWORD=3up3eR@raz7p0sswR4d
 # export PERMIT_ROOT_LOGIN=prohibit-password  # options: no, prohibit-password (default)
 # export PERMIT_PASSWORD_LOGIN=yes # options: no, yes (default)
+# export SUDO_WITHOUT_PASSWORD=no #options: yes, no (default)
 # wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/18.04/secure-server.sh | bash
 # -----------------------------
 
@@ -21,6 +22,7 @@ if [ ! -v NEW_USER ]; then NEW_USER=remoteuser; fi
 if [ ! -v NEW_PASSWORD ]; then NEW_PASSWORD=3up3eR@raz7p0sswR4d; fi
 if [ ! -v PERMIT_ROOT_LOGIN ]; then PERMIT_ROOT_LOGIN=prohibit-password; fi
 if [ ! -v PERMIT_PASSWORD_LOGIN ]; then PERMIT_PASSWORD_LOGIN=yes; fi
+if [ ! -v SUDO_WITHOUT_PASSWORD ]; then SUDO_WITHOUT_PASSWORD=no; fi
 
 # apply system updates
 apt-get update -y
@@ -66,6 +68,16 @@ if [ "$PERMIT_PASSWORD_LOGIN" == "no" ]; then
     sed -i "s/#$i/$i/g" /etc/ssh/sshd_config
     sed -i "s/^$i.*/$i no/g" /etc/ssh/sshd_config
   done
+fi
+
+# disable sudo with password
+if [ "$SUDO_WITHOUT_PASSWORD" == "yes" ]; then
+  if grep -Fwq "$NEW_USER" /etc/sudoers; then 
+    echo 'Rule already exists in /etc/sudoers'; 
+  else 
+    echo "$NEW_USER ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+    echo "" >> /etc/sudoers
+  fi
 fi
 
 # restart sshd
