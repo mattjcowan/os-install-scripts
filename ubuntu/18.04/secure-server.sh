@@ -19,6 +19,7 @@ fi
 if [ ! -v NEW_USER ]; then NEW_USER=remoteuser; fi
 if [ ! -v NEW_PASSWORD ]; then NEW_PASSWORD=3up3eR$raz7p0sswR4d; fi
 if [ ! -v PERMIT_ROOT_LOGIN ]; then PERMIT_ROOT_LOGIN=prohibit-password; fi
+if [ ! -v PERMIT_PASSWORD_LOGIN ]; then PERMIT_PASSWORD_LOGIN=yes; fi
 
 # apply system updates
 apt-get update -y
@@ -53,8 +54,20 @@ chmod 700 /home/${NEW_USER}/.ssh
 chmod 600 /home/${NEW_USER}/.ssh/authorized_keys
 chown -R ${NEW_USER}:${NEW_USER} /home/${NEW_USER}
 
-# disable root login with password, or alltogether, and restart sshd
+# disable root login with password, or alltogether
+sed -i "s/#PermitRootLogin/PermitRootLogin/g" /etc/ssh/sshd_config
 sed -i "s/^PermitRootLogin.*/PermitRootLogin $PERMIT_ROOT_LOGIN/g" /etc/ssh/sshd_config
+
+# disable password login
+if [ "$PERMIT_PASSWORD_LOGIN" == "no" ]; then
+  sshd_no_keys=(PasswordAuthentication ChallengeResponseAuthentication UsePAM)
+  for i in "${sshd_no_keys[@]}"; do
+    sed -i "s/#$i/$i/g" /etc/ssh/sshd_config
+    sed -i "s/^$i.*/$i no/g" /etc/ssh/sshd_config
+  done
+fi
+
+# restart sshd
 systemctl restart sshd
 
 # allow ssh through the firewall
