@@ -10,7 +10,7 @@
 # export PERMIT_ROOT_LOGIN=prohibit-password  # options: no, prohibit-password (default)
 # export PERMIT_PASSWORD_LOGIN=yes # options: no, yes (default)
 # export SUDO_WITHOUT_PASSWORD=no #options: yes, no (default)
-# wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/18.04/secure-server.sh | bash
+# wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/secure-server.sh | bash
 # -----------------------------
 
 touch /root/trash 2> /dev/null
