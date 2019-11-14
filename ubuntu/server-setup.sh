@@ -87,3 +87,6 @@ systemctl restart sshd
 # allow ssh through the firewall
 ufw allow OpenSSH
 ufw --force enable
+
+# remove extraneous packages
+apt-get autoremove -y
