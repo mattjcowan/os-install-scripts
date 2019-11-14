@@ -51,12 +51,12 @@ source ~/.bashrc
 
 # install sqlagent
 if [ "$SQLSERVER_INSTALL_SQLAGENT" == "yes" ]; then
-	sudo apt-get install mssql-server-agent -y
+  sudo apt-get install mssql-server-agent -y
 fi
 
 # install fulltext search
 if [ "$SQLSERVER_INSTALL_FULLTEXT" == "yes" ]; then
-    sudo apt-get install mssql-server-fts -y
+  sudo apt-get install mssql-server-fts -y
 fi
 
 sudo systemctl restart mssql-server
