@@ -3,10 +3,11 @@
 # -----------------------------
 # INSTRUCTIONS
 # -----------------------------
-# The following are defaults, and need not be set if used as-is
+# The following variables are the defaults, modify as needed
 # export NEW_USER=remoteuser
 # export NEW_PASSWORD=3up3eR$raz7p0sswR4d
 # export PERMIT_ROOT_LOGIN=prohibit-password  # options: no, prohibit-password (default)
+# export PERMIT_PASSWORD_LOGIN=yes # options: no, yes (default)
 # wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/18.04/secure-server.sh | bash
 # -----------------------------
 
