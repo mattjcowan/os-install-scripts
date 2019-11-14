@@ -41,7 +41,7 @@ if [ ! -d /home/${NEW_USER} ]; then
 fi
 
 # create an `admin` group if it doesn't exist, and add the user to it
-groupadd -f admin && usermod -aG admin $USER
+groupadd -f admin && usermod -aG admin $NEW_USER
 
 # setup user's ssh environment, copy root's authorized keys and generate an ssh key pair
 if [ ! -d /home/${NEW_USER}/.ssh ]; then
