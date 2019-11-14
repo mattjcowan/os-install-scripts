@@ -30,7 +30,11 @@ sudo apt-get update -y
 sudo apt-get install curl ufw -y
 
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-${SQLSERVER_VERSION}.list)"
+if [ "$SQLSERVER_VERSION" == "2017"]; then
+  sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2017.list)"
+else
+  sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/ubuntu/16.04/mssql-server-2019.list)"
+fi
 curl https://packages.microsoft.com/config/ubuntu/16.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list
 
 # install sqlserver
