@@ -53,6 +53,7 @@ fi
 sudo service postgresql restart
 
 if [ "$PG_ALLOW_REMOTE_CONNECTIONS" == "yes" ]; then
+  if [[ $(sudo ufw status) != *"OpenSSH"* ]]; then sudo ufw allow OpenSSH; fi
   sudo ufw allow 5432
   sudo ufw allow 5432/tcp
   sudo ufw reload
