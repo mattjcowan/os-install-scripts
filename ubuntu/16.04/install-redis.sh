@@ -81,7 +81,7 @@ sudo systemctl enable redis
 
 # open the firewall to allow external connections
 if [ "$REDIS_REMOTE_CONNECTIONS" == "yes" ]; then
-  sudo ufw allow OpenSSH
+  if [[ $(sudo ufw status) != *"OpenSSH"* ]]; then sudo ufw allow OpenSSH; fi
   sudo ufw allow 6379
   sudo ufw allow 6379/tcp
   sudo ufw reload
