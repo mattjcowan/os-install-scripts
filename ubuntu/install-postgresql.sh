@@ -21,8 +21,8 @@ if [ ! -v PG_ALLOW_REMOTE_CONNECTIONS ]; then PG_ALLOW_REMOTE_CONNECTIONS=yes; f
 sudo apt-get update -y
 sudo apt-get install curl ufw apt-transport-https -y
 
-sudo add-apt-repository "deb https://apt.postgresql.org/pub/repos/apt/ ${OS_CODENAME}-pgdg main"
 wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+sudo add-apt-repository "deb https://apt.postgresql.org/pub/repos/apt/ ${OS_CODENAME}-pgdg main"
 
 # install postgresql
 sudo apt-get update -y
