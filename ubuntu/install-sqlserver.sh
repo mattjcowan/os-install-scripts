@@ -9,7 +9,7 @@
 # export SQLSERVER_EDITION=Express  # possible options: Evaluation, Developer, Enterprise, Standard, Web, and Express
 # export SQLSERVER_INSTALL_SQLAGENT=yes # options: no, yes
 # export SQLSERVER_INSTALL_FULLTEXT=yes # options: no, yes
-# export SQLSERVER_ALLOW_REMOTE_CONNECTIONS=yes # options: no, yes (default)
+# export SQLSERVER_REMOTE_CONNECTIONS=yes # options: no, yes (default)
 # wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/install-sqlserver.sh | bash
 # -----------------------------
 
@@ -26,7 +26,7 @@ if [ ! -v SQLSERVER_EDITION ]; then SQLSERVER_EDITION=Express; fi
 if [ ! -v SQLSERVER_PASSWORD ]; then SQLSERVER_PASSWORD='YuiXQlk_d@WushaIDO@as^asSIOus'; fi
 if [ ! -v SQLSERVER_INSTALL_SQLAGENT ]; then SQLSERVER_INSTALL_SQLAGENT=yes; fi
 if [ ! -v SQLSERVER_INSTALL_FULLTEXT ]; then SQLSERVER_INSTALL_FULLTEXT=yes; fi
-if [ ! -v SQLSERVER_ALLOW_REMOTE_CONNECTIONS ]; then SQLSERVER_ALLOW_REMOTE_CONNECTIONS=yes; fi
+if [ ! -v SQLSERVER_REMOTE_CONNECTIONS ]; then SQLSERVER_REMOTE_CONNECTIONS=yes; fi
 
 sudo apt-get update -y
 sudo apt-get install curl ufw -y
@@ -68,7 +68,7 @@ fi
 
 sudo systemctl restart mssql-server
  
-if [ "$SQLSERVER_ALLOW_REMOTE_CONNECTIONS" == "yes" ]; then
+if [ "$SQLSERVER_REMOTE_CONNECTIONS" == "yes" ]; then
   if [[ $(sudo ufw status) != *"OpenSSH"* ]]; then sudo ufw allow OpenSSH; fi
   sudo ufw allow 1433
   sudo ufw allow 1433/tcp
