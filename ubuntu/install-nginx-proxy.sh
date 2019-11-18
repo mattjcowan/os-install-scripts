@@ -180,7 +180,7 @@ sudo ln -s /etc/nginx/sites-available/$APP_SERVICE_NAME /etc/nginx/sites-enabled
 fi
 
 # create system.d service
-if [ ! -f /etc/systemd/system/$APP_SERVICE_NAME.service ]; then
+# if [ ! -f /etc/systemd/system/$APP_SERVICE_NAME.service ]; then
 sudo bash -c "cat >/etc/systemd/system/$APP_SERVICE_NAME.service" <<EOL
 [Install]
 WantedBy=multi-user.target
@@ -200,7 +200,7 @@ do
   echo "Setting environment variable: $i"
   sudo echo "Environment=$i" >> /etc/systemd/system/$APP_SERVICE_NAME.service
 done
-fi
+# fi
 
 # fix permissions
 sudo find /var/www/ -type d -exec chmod 755 {} \;
@@ -211,7 +211,7 @@ sudo find $APP_SERVICE_WORKINGDIR -type f -exec chmod 644 {} \;
 sudo chown -R www-data:www-data $APP_SERVICE_WORKINGDIR
 
 # make the start command executable if it's a file
-[ -f $APP_SERVICE_EXECSTART] && sudo chmod +x $APP_SERVICE_EXECSTART
+[[ -f $APP_SERVICE_EXECSTART ]] && sudo chmod +x $APP_SERVICE_EXECSTART
 
 # start the service
 sudo service nginx reload
