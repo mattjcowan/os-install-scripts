@@ -76,7 +76,7 @@ sudo openssl dhparam -dsaparam -out /etc/ssl/certs/dhparam.pem 2048 > /dev/null 
 fi
 
 if [ ! -f /etc/nginx/snippets/ssl-params.conf ]; then
-cat >/etc/nginx/snippets/ssl-params.conf <<EOL
+sudo bash -c 'cat >/etc/nginx/snippets/ssl-params.conf' <<EOL
 ssl_protocols TLSv1.2;
 ssl_prefer_server_ciphers on;
 ssl_ciphers "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH";
@@ -95,7 +95,7 @@ EOL
 fi
 
 if [ ! -f /etc/nginx/snippets/self-signed.conf ]; then
-cat >/etc/nginx/snippets/self-signed.conf <<EOL
+sudo bash -c 'cat >/etc/nginx/snippets/self-signed.conf' <<EOL
 ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 EOL
@@ -106,7 +106,7 @@ if [ "$APP_DEFAULT_SERVER" == "yes" ]; then DEFSVR="default_server"; fi
 
 # create nginx site mapping
 # if [ ! -f /etc/nginx/sites-available/$APP_SERVICE_NAME ]; then
-cat >/etc/nginx/sites-available/$APP_SERVICE_NAME <<EOL
+sudo bash -c 'cat >/etc/nginx/sites-available/$APP_SERVICE_NAME' <<EOL
 server {
     # force https
     listen 80 $DEFSVR;
@@ -181,7 +181,7 @@ fi
 
 # create system.d service
 if [ ! -f /etc/systemd/system/$APP_SERVICE_NAME.service ]; then
-cat >/etc/systemd/system/$APP_SERVICE_NAME.service <<EOL
+sudo bash -c 'cat >/etc/systemd/system/$APP_SERVICE_NAME.service' <<EOL
 [Install]
 WantedBy=multi-user.target
 [Unit]
@@ -198,7 +198,7 @@ fi
 
 for $i in "${APP_SERVICE_ENV[@]}"
 do
-  echo "Environment=$i" >> /etc/systemd/system/$APP_SERVICE_NAME.service
+  sudo echo "Environment=$i" >> /etc/systemd/system/$APP_SERVICE_NAME.service
 done
 
 # fix permissions
