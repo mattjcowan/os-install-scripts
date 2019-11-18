@@ -194,12 +194,13 @@ RestartSec=10
 SyslogIdentifier=$APP_SERVICE_NAME
 User=www-data
 EOL
-fi
 
-for $i in "${APP_SERVICE_ENV[@]}"
+for i in ${APP_SERVICE_ENV[@]}
 do
+  echo "Setting environment variable: $i"
   sudo echo "Environment=$i" >> /etc/systemd/system/$APP_SERVICE_NAME.service
 done
+fi
 
 # fix permissions
 sudo find /var/www/ -type d -exec chmod 755 {} \;
