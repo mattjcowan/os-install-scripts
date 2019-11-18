@@ -55,7 +55,7 @@ sudo ufw allow ssh
 sudo ufw --force enable
 
 # install nginx
-sudo apt-get install nginx -y
+sudo apt-get install nginx openssl -y
 sudo systemctl start nginx
 sudo systemctl enable nginx
 sudo ufw allow 'Nginx HTTP'
@@ -64,9 +64,10 @@ sudo ufw reload
 
 # create nginx self-signed certs
 sudo apt-get install dnsutils -y
+[[ -f /etc/ssl/openssl.cnf ]] && sudo sed -i 's/^RANDFILE/#&/' /etc/ssl/openssl.cnf
+
 # publicip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 if [[ ! -f /etc/ssl/private/nginx-selfsigned.key || ! -f /etc/ssl/certs/nginx-selfsigned.crt ]]; then
-[[ -f /etc/ssl/openssl.cfn ]] && sudo sed -i 's/RANDFILE/#RANDFILE/g' /etc/ssl/openssl.cnf
 sudo openssl req -x509 -nodes -days 2000 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj /C=US/ST=Illinois/L=Chicago/O=Startup/CN=$API_DOMAIN
 fi
 
