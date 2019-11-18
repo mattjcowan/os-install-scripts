@@ -106,7 +106,7 @@ if [ "$APP_DEFAULT_SERVER" == "yes" ]; then DEFSVR="default_server"; fi
 
 # create nginx site mapping
 # if [ ! -f /etc/nginx/sites-available/$APP_SERVICE_NAME ]; then
-sudo bash -c 'cat >/etc/nginx/sites-available/$APP_SERVICE_NAME' <<EOL
+sudo bash -c "cat >/etc/nginx/sites-available/$APP_SERVICE_NAME" <<EOL
 server {
     # force https
     listen 80 $DEFSVR;
@@ -181,7 +181,7 @@ fi
 
 # create system.d service
 if [ ! -f /etc/systemd/system/$APP_SERVICE_NAME.service ]; then
-sudo bash -c 'cat >/etc/systemd/system/$APP_SERVICE_NAME.service' <<EOL
+sudo bash -c "cat >/etc/systemd/system/$APP_SERVICE_NAME.service" <<EOL
 [Install]
 WantedBy=multi-user.target
 [Unit]
