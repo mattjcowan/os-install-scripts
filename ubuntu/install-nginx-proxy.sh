@@ -197,8 +197,7 @@ EOL
 
 for i in ${APP_SERVICE_ENV[@]}
 do
-  echo "Setting environment variable: $i"
-  sudo echo "Environment=$i" >> /etc/systemd/system/$APP_SERVICE_NAME.service
+  echo "Environment=$i" | sudo tee -a /etc/systemd/system/$APP_SERVICE_NAME.service
 done
 # fi
 
