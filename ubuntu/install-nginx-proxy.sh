@@ -68,7 +68,7 @@ sudo apt-get install dnsutils -y
 
 # publicip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 if [[ ! -f /etc/ssl/private/nginx-selfsigned.key || ! -f /etc/ssl/certs/nginx-selfsigned.crt ]]; then
-sudo openssl req -x509 -nodes -days 2000 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj /C=US/ST=Illinois/L=Chicago/O=Startup/CN=$API_DOMAIN
+sudo openssl req -x509 -nodes -days 2000 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj /C=US/ST=Illinois/L=Chicago/O=Startup/CN=$APP_SERVER_NAME
 fi
 
 if [ ! -f /etc/ssl/certs/dhparam.pem ]; then
