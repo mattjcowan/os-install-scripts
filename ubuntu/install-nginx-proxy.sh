@@ -171,12 +171,12 @@ server {
 EOL
 # fi
 
-if [[ ! -f /etc/nginx/sites-enabled/default ]]; then
-  rm /etc/nginx/sites-enabled/default
+if [[ -f /etc/nginx/sites-enabled/default ]]; then
+  sudo rm /etc/nginx/sites-enabled/default
 fi
 
 if [[ ! -f /etc/nginx/sites-enabled/$APP_SERVICE_NAME ]]; then
-sudo ln -s /etc/nginx/sites-available/$APP_SERVICE_NAME /etc/nginx/sites-enabled/$APP_SERVICE_NAME
+  sudo ln -s /etc/nginx/sites-available/$APP_SERVICE_NAME /etc/nginx/sites-enabled/$APP_SERVICE_NAME
 fi
 
 # create system.d service
