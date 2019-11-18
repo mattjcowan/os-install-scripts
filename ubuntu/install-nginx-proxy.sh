@@ -71,11 +71,11 @@ if [[ ! -f /etc/ssl/private/nginx-selfsigned.key || ! -f /etc/ssl/certs/nginx-se
 sudo openssl req -x509 -nodes -days 2000 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj /C=US/ST=Illinois/L=Chicago/O=Startup/CN=$APP_SERVER_NAME
 fi
 
-if [ ! -f /etc/ssl/certs/dhparam.pem ]; then
+if [[ ! -f /etc/ssl/certs/dhparam.pem ]]; then
 sudo openssl dhparam -dsaparam -out /etc/ssl/certs/dhparam.pem 2048 > /dev/null 2>&1
 fi
 
-if [ ! -f /etc/nginx/snippets/ssl-params.conf ]; then
+if [[ ! -f /etc/nginx/snippets/ssl-params.conf ]]; then
 sudo bash -c 'cat >/etc/nginx/snippets/ssl-params.conf' <<EOL
 ssl_protocols TLSv1.2;
 ssl_prefer_server_ciphers on;
@@ -94,7 +94,7 @@ ssl_dhparam /etc/ssl/certs/dhparam.pem;
 EOL
 fi
 
-if [ ! -f /etc/nginx/snippets/self-signed.conf ]; then
+if [[ ! -f /etc/nginx/snippets/self-signed.conf ]]; then
 sudo bash -c 'cat >/etc/nginx/snippets/self-signed.conf' <<EOL
 ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
@@ -171,16 +171,16 @@ server {
 EOL
 # fi
 
-if [ ! -f /etc/nginx/sites-enabled/default ]; then
+if [[ ! -f /etc/nginx/sites-enabled/default ]]; then
   rm /etc/nginx/sites-enabled/default
 fi
 
-if [ ! -f /etc/nginx/sites-enabled/$APP_SERVICE_NAME ]; then
+if [[ ! -f /etc/nginx/sites-enabled/$APP_SERVICE_NAME ]]; then
 sudo ln -s /etc/nginx/sites-available/$APP_SERVICE_NAME /etc/nginx/sites-enabled/$APP_SERVICE_NAME
 fi
 
 # create system.d service
-# if [ ! -f /etc/systemd/system/$APP_SERVICE_NAME.service ]; then
+# if [[ ! -f /etc/systemd/system/$APP_SERVICE_NAME.service ]]; then
 sudo bash -c "cat >/etc/systemd/system/$APP_SERVICE_NAME.service" <<EOL
 [Install]
 WantedBy=multi-user.target
