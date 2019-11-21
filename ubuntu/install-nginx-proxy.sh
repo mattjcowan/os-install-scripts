@@ -115,7 +115,12 @@ server {
     return 301 https://$host$request_uri;
 }
 server {
-    client_max_body_size 500M;
+    client_max_body_size 500M;       
+    # client_body_buffer_size 128k;
+    # proxy_connect_timeout   90;
+    # proxy_send_timeout      90;
+    # proxy_read_timeout      90;
+    # proxy_buffers           32 4k;
 
     listen 443 ssl http2 $DEFSVR;
     listen [::]:443 ssl http2 $DEFSVR;
@@ -191,6 +196,8 @@ WorkingDirectory=$APP_SERVICE_WORKINGDIR
 ExecStart=$APP_SERVICE_EXECSTART
 Restart=always
 RestartSec=10
+TimeoutStopSec=90
+KillSignal=SIGINT
 SyslogIdentifier=$APP_SERVICE_NAME
 User=www-data
 EOL
