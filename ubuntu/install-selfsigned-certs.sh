@@ -4,7 +4,8 @@
 # INSTRUCTIONS
 # -----------------------------
 # curl -sS https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/install-selfsigned-certs.sh | bash
-# wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/install-dotnet.sh | bash
+# or
+# wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/install-selfsigned-certs.sh | bash
 # -----------------------------
 
 sudo apt-get install nginx openssl ssl-cert -y
