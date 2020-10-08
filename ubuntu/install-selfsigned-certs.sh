@@ -10,9 +10,9 @@
 sudo apt-get install nginx openssl ssl-cert -y
 
 # Create target directories to a good destination
-sudo mkdir -p /etc/nginx/ssl
+sudo mkdir -p /etc/nginx/ssl/certs
 sudo mkdir -p /etc/nginx/ssl/private
-sudo chmod 755 /etc/nginx/ssl
+sudo chmod 755 /etc/nginx/ssl/certs
 sudo chmod 710 /etc/nginx/ssl/private
 
 if [[ ! -f /etc/nginx/ssl/certs/dhparam.pem ]]; then
@@ -44,7 +44,7 @@ sudo mv server.key /etc/nginx/ssl/private/nginx-selfsigned.key
 # Protect the cert and private key
 sudo chown -R root:root /etc/nginx/ssl/
 sudo chown -R root:ssl-cert /etc/nginx/ssl/private/
-sudo chmod 644 /etc/nginx/ssl/*.crt
+sudo chmod 644 /etc/nginx/ssl/certs/*.crt
 sudo chmod 640 /etc/nginx/ssl/private/*.key
 fi
 
