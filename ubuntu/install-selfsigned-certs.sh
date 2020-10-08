@@ -28,7 +28,7 @@ sudo openssl rand -base64 48 > passphrase.txt
 sudo openssl genrsa -aes128 -passout file:passphrase.txt -out server.key 2048
 
 # Generate a CSR (Certificate Signing Request)
-sudo openssl req -new -passin file:passphrase.txt -key server.key -out server.csr -subj "/C=US/ST=Illinois/L=Chicago/O=Startup/CN=ServerApps"
+sudo openssl req -new -passin file:passphrase.txt -key server.key -out server.csr -subj /C=US/ST=Illinois/L=Chicago/O=Startup/CN=ServerApps
 
 # Remove Passphrase from Key
 sudo cp server.key server.key.org
