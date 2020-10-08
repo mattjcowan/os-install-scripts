@@ -7,7 +7,7 @@
 # wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/install-dotnet.sh | bash
 # -----------------------------
 
-sudo apt-get install nginx openssl -y
+sudo apt-get install nginx openssl ssl-cert -y
 
 # Create target directories to a good destination
 sudo mkdir -p /etc/nginx/ssl
