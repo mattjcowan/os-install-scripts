@@ -44,15 +44,15 @@ sudo mv server.key /etc/nginx/ssl/private/nginx-selfsigned.key
 # Protect the cert and private key
 sudo chown -R root:root /etc/nginx/ssl/
 sudo chown -R root:ssl-cert /etc/nginx/ssl/private/
-sudo chmod 644 /etc/nginx/ssl/certs/*.crt
-sudo chmod 640 /etc/nginx/ssl/private/*.key
+sudo chmod 644 /etc/nginx/ssl/certs/nginx-selfsigned.crt
+sudo chmod 640 /etc/nginx/ssl/private/nginx-selfsigned.key
 fi
 
 # Create SSL selfsigned cert snippet for easy integration to new sites
 if [[ ! -f /etc/nginx/snippets/ssl-selfsigned.conf ]]; then
 sudo bash -c 'cat >/etc/nginx/snippets/ssl-selfsigned.conf' <<EOL
 ssl_certificate /etc/nginx/ssl/certs/nginx-selfsigned.crt;
-ssl_certificate_key /etc/nginx/ssl/private/nginx-selfsigned.key;
+ssl_certificate_key /etc/nginx/ssl/private/nginx-selfsigned.key
 EOL
 fi
 
