@@ -79,5 +79,8 @@ resolver_timeout 5s;
 add_header Strict-Transport-Security "max-age=63072000; includeSubdomains";
 add_header X-Frame-Options SAMEORIGIN;
 add_header X-Content-Type-Options nosniff;
+add_header X-XSS-Protection "1; mode=block";
+add_header Referrer-Policy "no-referrer";
+# add_header Content-Security-Policy "default-src https: 'self' https://ssl.google-analytics.com https://fonts.googleapis.com https://themes.googleusercontent.com https://cdn.jsdelivr.net https://maxcdn.bootstrapcdn.com https://code.jquery.com https://cdnjs.cloudflare.com; object-src 'none'";
 EOL
 fi
