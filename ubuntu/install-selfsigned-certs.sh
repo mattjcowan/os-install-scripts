@@ -53,7 +53,7 @@ fi
 if [[ ! -f /etc/nginx/snippets/ssl-selfsigned.conf ]]; then
 sudo bash -c 'cat >/etc/nginx/snippets/ssl-selfsigned.conf' <<EOL
 ssl_certificate /etc/nginx/ssl/certs/nginx-selfsigned.crt;
-ssl_certificate_key /etc/nginx/ssl/private/nginx-selfsigned.key
+ssl_certificate_key /etc/nginx/ssl/private/nginx-selfsigned.key;
 EOL
 fi
 
