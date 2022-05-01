@@ -2,7 +2,7 @@
 
 # -----------------------------
 # INSTRUCTIONS
-# Tested on Ubuntu 16.04, 18.04, and 19.04
+# Tested on Ubuntu 16.04, 18.04, 19.04, and 20.04
 # -----------------------------
 # The following variables are the defaults, modify as needed
 # export NEW_USER=remoteuser
@@ -10,7 +10,7 @@
 # export PERMIT_ROOT_LOGIN=prohibit-password  # options: no, prohibit-password (default)
 # export PERMIT_PASSWORD_LOGIN=yes # options: no, yes (default)
 # export SUDO_WITHOUT_PASSWORD=no #options: yes, no (default)
-# wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/secure-server.sh | bash
+# wget -O - https://raw.githubusercontent.com/mattjcowan/os-install-scripts/master/ubuntu/server-setup.sh | bash
 # -----------------------------
 
 touch /root/trash 2> /dev/null
@@ -30,7 +30,7 @@ apt-get update -y
 apt-get upgrade -y
 
 # install popular packages
-apt-get install ufw curl git openssl -y
+apt-get install ufw curl git openssl autoremove unattended-upgrades -y
 
 # set the default shell for users
 useradd -Ds /bin/bash
@@ -85,8 +85,30 @@ fi
 systemctl restart sshd
 
 # allow ssh through the firewall
-ufw allow OpenSSH
+ufw disable
+ufw --force reset
+ufw default deny incoming
+ufw default allow outgoing
+ufw allow ssh
+ufw allow http
+ufw allow https
 ufw --force enable
+ufw reload
 
-# remove extraneous packages
+# setup autoupgrades, and remove extraneous packages
 apt-get autoremove -y
+cat >/etc/apt/apt.conf.d/20auto-upgrades <<EOL
+APT::Periodic::Update-Package-Lists "1";
+APT::Periodic::Download-Upgradeable-Packages "1";
+APT::Periodic::AutocleanInterval "3";
+APT::Periodic::Unattended-Upgrade "1";
+EOL
+
+echo "Unattended-Upgrade::Automatic-Reboot \"true\";" | sudo tee -a /etc/apt/apt.conf.d/50unattended-upgrades
+echo "Unattended-Upgrade::Automatic-Reboot-Time \"07:00\";" | sudo tee -a /etc/apt/apt.conf.d/50unattended-upgrades
+
+# install fail2ban
+apt install fail2ban -y
+cp /etc/fail2ban/fail2ban.conf /etc/fail2ban/fail2ban.local
+cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+fail2ban-client start
